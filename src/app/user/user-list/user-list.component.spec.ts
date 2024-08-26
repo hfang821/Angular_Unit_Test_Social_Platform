@@ -21,8 +21,6 @@ describe('UserListComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(UserListComponent);
     component = fixture.componentInstance;
-    // mannually trigger change detection to update the data binding
-    // fixture.detectChanges();
     userService = TestBed.inject(UserService);
     // spyOn is used to mock the service method and return a value
     userServiceSpy = spyOn(userService, 'getUsers').and.returnValue(of([
@@ -35,4 +33,10 @@ describe('UserListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should retrive users from the UserSerive on init', ()=>{
+    // mannually trigger change detection to update the data binding
+    fixture.detectChanges();
+    expect(userServiceSpy).toHaveBeenCalled();
+  })
 });
