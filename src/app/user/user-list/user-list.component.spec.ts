@@ -5,6 +5,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserListComponent } from './user-list.component';
 import { UserService } from '../user.service';
 import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
 describe('UserListComponent', () => {
   let component: UserListComponent;
@@ -37,6 +38,19 @@ describe('UserListComponent', () => {
   it('should retrive users from the UserSerive on init', ()=>{
     // mannually trigger change detection to update the data binding
     fixture.detectChanges();
+    expect(userServiceSpy).toHaveBeenCalled();
+  });
+
+  it('should retrieve users form the userService when the refresh button is clicked', ()=>{
+    fixture.detectChanges();
+
+    userServiceSpy.calls.reset();
+
+    const button = fixture.debugElement.query(By.css('button'));
+    // eventName: The name of the event to trigger (e.g., 'click').
+    // eventObj: The event object to pass to the handler. This can be any object that represents the event details.
+    button.triggerEventHandler('click', null);
+
     expect(userServiceSpy).toHaveBeenCalled();
   })
 });
